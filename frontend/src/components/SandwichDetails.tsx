@@ -1,5 +1,6 @@
 import "./SandwichDetails.css"
 import {Sandwich} from "../model/Sandwich";
+import {Link} from "react-router-dom";
 
 type SandwichDetailsProps = {
     sandwich: Sandwich;
@@ -17,6 +18,7 @@ export default function SandwichDetails(props: SandwichDetailsProps) {
             <p className="left-side">Anzahl von Bulleten: </p><span>{props.sandwich.numberOfPatties} </span>
             <p className="left-side">Brot gegrillt: </p><span>{String(props.sandwich.grilled)} </span>
             <p className="left-side">Extrawünsche: </p><span>{props.sandwich.extraWishes} </span>
+
         </div>
     )
 }

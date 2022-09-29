@@ -1,0 +1,22 @@
+input {
+    text-align: center;
+    margin: 10px;
+}
+
+button {
+    display: flex;
+    justify-content: right;
+    margin: 20px;
+}
+
+label {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: right;
+    margin: 10px;
+}
+
+form {
+    border: solid;
+}

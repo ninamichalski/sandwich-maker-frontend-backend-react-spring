@@ -1,5 +1,6 @@
-import {useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {Sandwich} from "../model/Sandwich";
+import "./CreateSandwich.css";
 
 type CreateSandwichProps = {
     addSandwich: (description: Sandwich) => void
@@ -18,28 +19,72 @@ export default function CreateSandwich(props: CreateSandwichProps) {
 
     const [sandwich, setSandwich] = useState(emptySandwichPlaceholder)
 
-    /*
-    * TODO: Aufgabe 3 -> Erstelle eine handleSubmit(event: FormEvent<HTMLFormElement>) Funktion,
-    *  die props.addSandwich aufruft und das neue Sandwich-Objekt als Parameter übergibt
-    **/
+    function handleChange(event:ChangeEvent<HTMLInputElement>) {
+        const inputFeldName = event.target.name;
+        const inputFeldValue = event.target.value;
+        const inputFeldType = event.target.type;
 
-    /*
-    * TODO: Aufgabe 2 -> Erstelle eine handleChange(event: ChangeEvent<HTMLInputElement>) Funktion,
-    *  die Änderungen an der Form übernimmt und den Sandwich-State aktualisiert
-    **/
+        setSandwich((oldForm) => ({
+            ...oldForm,
+            [inputFeldName]:
+                inputFeldType === "checkbox" ? event.target.checked
+                    : inputFeldValue
+        }))
+    }
+
+        function handleSubmit(e:FormEvent<HTMLFormElement>) {
+            e.preventDefault()
+            console.log(sandwich)
+            props.addSandwich(sandwich)
+        }
 
 
-    /*
-    * TODO: Aufgabe 1 -> Erstelle eine <form> mit der man alle Daten eines Burgers angeben kann
-    **/
     return (
         <div>
-            {/* TODO: onClick hier entfernen und props.addSandwich in handleSubmit verschieben */}
-            <button onClick={() => props.addSandwich(sandwich)}>Bestellung hinzufügen</button>
+            <form onSubmit={handleSubmit}>
+                <label>Which burger would you like?
+                <input
+                    name="name"
+                    type="text"
+                    value={sandwich.name}
+                    placeholder="The Awesome Burger"
+                    onChange={handleChange}/>
+                </label>
+                <label>Which patty would you like on your burger?
+                <input
+                    name="patty"
+                    type="text"
+                    value={sandwich.patty}
+                    placeholder="Veggy patty"
+                    onChange={handleChange}/>
+                </label>
+                <label>How many burgers would you like?
+                <input
+                    name="numberOfPatties"
+                    type="text"
+                    value={sandwich.numberOfPatties}
+                    placeholder="1"
+                    onChange={handleChange}/>
+                </label>
+                <label>Any more wishes?
+                <input
+                    name="extraWishes"
+                    type="text"
+                    value={sandwich.extraWishes}
+                    placeholder="Red onions"
+                    onChange={handleChange}/>
+                </label>
+                <label>Do you like your burger grilled?
+                <input
+                    name="grilled"
+                    type="checkbox"
+                    checked={sandwich.grilled}
+                    onChange={handleChange}/>
+                </label>
+                <button>Bestellung hinzufügen</button>
+            </form>
+
         </div>
     )
-
-    /* TODO: Bonusaufgabe 1 -> Füge dem Projekt Routing hinzu (click auf ein Sandwich, öffnet die Sandwich-Details wie bei Rick&Morty)  */
-    /* TODO: Bonusaufgabe 2 -> Style das Projekt nach deinen Wünschen  */
     /* TODO: Bonusaufgabe 3 -> Gib dem Sandwich-Objekt mehr Attribute (im Frontend + Backend)  */
 }
